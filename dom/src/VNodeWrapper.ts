@@ -20,10 +20,9 @@ export class VNodeWrapper {
 
     const isVNodeAndRootElementIdentical =
       typeof vNodeId === 'string' &&
-      vNodeId.toUpperCase() === this.rootElement.id.toUpperCase() &&
+      vNodeId === this.rootElement.id &&
       selTagName.toUpperCase() === this.rootElement.tagName.toUpperCase() &&
-      vNodeClassName.toUpperCase() ===
-        this.rootElement.className.toUpperCase() &&
+      vNodeClassName === this.rootElement.className &&
       !this.isRootInDocumentFragment();
 
     if (isVNodeAndRootElementIdentical) {
