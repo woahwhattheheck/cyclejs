@@ -34,6 +34,28 @@ describe('VNodeWrapper', function() {
     assert.strictEqual(result.children![0], vnode);
   });
 
+  it('should wrap when root ids differ only by case', function() {
+    const root = document.createElement('main');
+    root.id = 'App';
+    const vnode = h('main#app', 'content');
+
+    const result = new VNodeWrapper(root).call(vnode);
+
+    assert.notStrictEqual(result, vnode);
+    assert.strictEqual(result.children![0], vnode);
+  });
+
+  it('should wrap when root classes differ only by case', function() {
+    const root = document.createElement('main');
+    root.className = 'Shell';
+    const vnode = h('main.shell', 'content');
+
+    const result = new VNodeWrapper(root).call(vnode);
+
+    assert.notStrictEqual(result, vnode);
+    assert.strictEqual(result.children![0], vnode);
+  });
+
   it('should preserve the wrapper inside a DocumentFragment', function() {
     const fragment = document.createDocumentFragment();
     const root = fragment.appendChild(document.createElement('main'));
