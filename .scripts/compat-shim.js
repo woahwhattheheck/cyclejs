@@ -24,7 +24,8 @@ if (!fs.existsSync(path.join(libDir, 'cjs', moduleName + '.js'))) {
 // A previous build may have copied lib/cjs/<module>.js.map into lib/.
 // The re-export has no inline sourceMappingURL; remove that obsolete map so
 // incremental builds and prepublish archives cannot ship a broken source path.
-fs.rmSync(path.join(libDir, moduleName + '.js.map'), { force: true });
+const staleSourceMap = path.join(libDir, moduleName + '.js.map');
+if (fs.existsSync(staleSourceMap)) fs.unlinkSync(staleSourceMap);
 
 fs.writeFileSync(
   path.join(libDir, moduleName + '.js'),
