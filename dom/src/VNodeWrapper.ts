@@ -40,9 +40,13 @@ export class VNodeWrapper {
   }
 
   private normalizeClassNames(className: string): string {
-    return className
-      .split(/\\s+/)
-      .filter(Boolean)
+    return Array.from(
+      new Set(
+        className
+          .split(/\\s+/)
+          .filter(Boolean)
+      )
+    )
       .sort()
       .join(' ');
   }
