@@ -33,6 +33,16 @@ describe('VNodeWrapper', function() {
     assert.strictEqual(result, vnode);
   });
 
+  it('should reuse an id-less root when the DOM repeats a class token', function() {
+    const root = document.createElement('main');
+    root.className = 'app app shell';
+    const vnode = h('main.shell.app', 'content');
+
+    const result = new VNodeWrapper(root).call(vnode);
+
+    assert.strictEqual(result, vnode);
+  });
+
   it('should wrap an id-less root element when classes differ', function() {
     const root = document.createElement('main');
     root.className = 'app';
