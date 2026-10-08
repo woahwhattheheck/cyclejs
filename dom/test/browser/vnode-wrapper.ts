@@ -23,6 +23,16 @@ describe('VNodeWrapper', function() {
     assert.strictEqual(result, vnode);
   });
 
+  it('should reuse an id-less root element when class order differs', function() {
+    const root = document.createElement('main');
+    root.className = 'app shell';
+    const vnode = h('main.shell.app', 'content');
+
+    const result = new VNodeWrapper(root).call(vnode);
+
+    assert.strictEqual(result, vnode);
+  });
+
   it('should wrap an id-less root element when classes differ', function() {
     const root = document.createElement('main');
     root.className = 'app';
