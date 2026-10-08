@@ -22,7 +22,7 @@ export class VNodeWrapper {
       typeof vNodeId === 'string' &&
       vNodeId === this.rootElement.id &&
       selTagName.toUpperCase() === this.rootElement.tagName.toUpperCase() &&
-      vNodeClassName === this.rootElement.className &&
+      this.hasSameClassNames(vNodeClassName) &&
       !this.isRootInDocumentFragment();
 
     if (isVNodeAndRootElementIdentical) {
@@ -30,6 +30,21 @@ export class VNodeWrapper {
     }
 
     return this.wrap([vnode]);
+  }
+
+  private hasSameClassNames(vNodeClassName: string): boolean {
+    return (
+      this.normalizeClassNames(vNodeClassName) ===
+      this.normalizeClassNames(this.rootElement.className)
+    );
+  }
+
+  private normalizeClassNames(className: string): string {
+    return className
+      .split(/\\s+/)
+      .filter(Boolean)
+      .sort()
+      .join(' ');
   }
 
   private isRootInDocumentFragment(): boolean {
